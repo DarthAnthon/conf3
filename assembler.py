@@ -131,10 +131,16 @@ class Assembler:
         """Упаковка полей команды в 7 байт (машинный код)"""
         # Объединяем поля в одно 56-битное значение
         value = 0
-        for field, offset in FIELD_OFFSETS.items():
-            if field in fields:
-                field_value = fields[field] & ((1 << FIELD_SIZES[field]) - 1)
-                value |= field_value << offset
+        if fields['A'] == OP_READ_MEM:
+                for field, offset in FIELD_OFFSETS1.items():
+                    if field in fields:
+                        field_value = fields[field] & ((1 << FIELD_SIZES[field]) - 1)
+                        value |= field_value << offset
+        else:
+            for field, offset in FIELD_OFFSETS.items():
+                if field in fields:
+                    field_value = fields[field] & ((1 << FIELD_SIZES[field]) - 1)
+                    value |= field_value << offset
         
         # Преобразуем в 7 байт (little-endian)
         result = bytearray(7)

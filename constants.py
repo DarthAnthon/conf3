@@ -24,5 +24,11 @@ FIELD_OFFSETS = {
     'D': 37
 }
 
+FIELD_OFFSETS1 = {
+    'A': 0,
+    'B': 7,
+    'C': 18,
+    'D': 33
+}
 # Маска для обращения битов (16-битное число)
 BITREVERSE_MASK = 0xFFFF
