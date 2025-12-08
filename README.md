@@ -24,7 +24,7 @@
 ## Использование
 
 ### Запуск тестов:
-python "c:/Users/Anton/Desktop/учёба/конф/пр 3/assembler.py" test_program.asm program.bin --test
+python assembler.py test_program.asm program.bin --test
 
 ### Пример работы
 <img width="483" height="617" alt="image" src="https://github.com/user-attachments/assets/d8800526-c3f7-4685-ab52-37cae0784fef" />
