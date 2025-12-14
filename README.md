@@ -1,8 +1,8 @@
 # Конфигурационное управление работа №3 
 
-# Этап 4 Реализация арифметико-логического устройства (АЛУ)
+# Этап 5 Выполнение тестовой задачи
 Реализация ассемблера и интерпретатора для учебной виртуальной машины. Преобразование промежуточное представления в бинарный машинный код УВМ. Цикл интерпретации, модель памяти УВМ и базовые команды. Поддержка 
-вычислительных операций.
+вычислительных операций. Решение тестовой задачи.
 
 ## Язык ассемблера УВМ
 
@@ -25,11 +25,24 @@
 ## Использование
 
 ### Запуск тестов:
-python assembler.py test_reverse.asm program.bin 
-python interpreter_cli.py program.bin memory_dump.json --start 0 --end 450
+#### Тест 1
+python assembler.py test_1.asm program_1.bin 
+
+python interpreter_cli.py program_1.bin dump_1.json --start 0 --end 450
+
+#### Тест 2
+python assembler.py test_2.asm program_2.bin 
+
+python interpreter_cli.py program_2.bin dump_2.json --start 0 --end 450
+
+#### Тест 3
+python assembler.py test_3.asm program_3.bin 
+
+python interpreter_cli.py program_3.bin dump_3.json --start 0 --end 450
 
 ### Пример работы
-<img width="1126" height="286" alt="image" src="https://github.com/user-attachments/assets/62204389-d224-4d9a-b6dc-5bcc6a50d401" />
+<img width="1101" height="859" alt="image" src="https://github.com/user-attachments/assets/ee25f70d-ac4f-4487-899a-5a1217b9a829" />
+
 
 
 
