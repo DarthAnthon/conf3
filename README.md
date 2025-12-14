@@ -26,6 +26,7 @@
 
 ### Запуск тестов:
 python assembler.py test_reverse.asm program.bin 
+
 python interpreter_cli.py program.bin memory_dump.json --start 0 --end 450
 
 ### Пример работы
