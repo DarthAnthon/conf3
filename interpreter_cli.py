@@ -26,7 +26,6 @@ class UVMInterpreterCLI:
         value = 0
         for i, byte in enumerate(command_bytes):
             value |= byte << (8 * i)
-        print(value)
         # Извлекаем поля
         fields = {}
         # Определяем, какую таблицу смещений использовать
@@ -41,7 +40,6 @@ class UVMInterpreterCLI:
             for field, offset in FIELD_OFFSETS.items():
                 mask = (1 << FIELD_SIZES[field]) - 1
                 fields[field] = (value >> offset) & mask
-        print(fields)
         return fields
     
     def bitreverse_16(self, value: int) -> int:
