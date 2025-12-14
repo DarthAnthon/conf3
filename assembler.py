@@ -212,109 +212,6 @@ class Assembler:
         return fields
 
 
-def create_test_program():
-    """Создание тестовой программы со всеми командами из спецификации"""
-    test_program = """// Тестовая программа УВМ
-// Включает все команды из спецификации
-
-// Тест 1: Загрузка константы (A=81, B=201, C=567)
-[201] = 567
-
-// Тест 2: Чтение из памяти (A=42, B=21, C=962, D=386)
-[386] = [[962] + 21]
-
-// Тест 3: Запись в память (A=108, B=217, C=226, D=54)
-[[226] + 54] = [217]
-
-// Тест 4: Обращение битов (A=53, B=980, C=735)
-[735] = bitreverse([980])
-
-// Дополнительные тестовые команды
-[100] = 42          // Инициализация
-[101] = 100         // Указатель
-[102] = [[101] + 0] // Копирование через указатель
-[103] = bitreverse([100])  // Обращение битов"""
-
-    # Записываем в файл
-    with open("test_specification.asm", "w", encoding="utf-8") as f:
-        f.write(test_program)
-    
-    print("Создан тестовый файл: test_specification.asm")
-
-
-def verify_specification_tests():
-    """Проверка соответствия тестам из спецификации"""
-    print("=== Проверка тестов из спецификации УВМ ===\n")
-    
-    assembler = Assembler()
-    tests = [
-        {
-            "name": "Загрузка константы",
-            "asm": "[201] = 567",
-            "expected": [0xD1, 0x64, 0xC0, 0x8D, 0x00, 0x00, 0x00]
-        },
-        {
-            "name": "Чтение из памяти",
-            "asm": "[386] = [[962] + 21]",
-            "expected": [0xAA, 0x0A, 0x08, 0x0F, 0x04, 0x03, 0x00]
-        },
-        {
-            "name": "Запись в память",
-            "asm": "[[226] + 54] = [217]",
-            "expected": [0xEC, 0x6C, 0x80, 0x38, 0xC0, 0x06, 0x00]
-        },
-        {
-            "name": "Обращение битов",
-            "asm": "[735] = bitreverse([980])",
-            "expected": [0x35, 0xEA, 0xC1, 0xB7, 0x00, 0x00, 0x00]
-        }
-    ]
-    
-    all_passed = True
-    
-    for test in tests:
-        print(f"Тест: {test['name']}")
-        print(f"Команда: {test['asm']}")
-        
-        try:
-            # Разбираем команду
-            parsed = Parser.parse_line(test['asm'])
-            if parsed is None:
-                raise ValueError("Не удалось разобрать команду")
-            
-            # Ассемблируем
-            fields = assembler.assemble_command(parsed)
-            machine_code = assembler.pack_command(fields)
-            
-            # Преобразуем в список байтов для сравнения
-            actual_bytes = list(machine_code)
-            expected_bytes = test['expected']
-            
-            # Сравниваем
-            if actual_bytes == expected_bytes:
-                print("✓ Результат соответствует спецификации")
-                hex_bytes = ', '.join(f'0x{b:02X}' for b in actual_bytes)
-                print(f"  Машинный код: {hex_bytes}")
-            else:
-                print("✗ Ошибка: результат не соответствует спецификации")
-                print(f"  Ожидалось: {', '.join(f'0x{b:02X}' for b in expected_bytes)}")
-                print(f"  Получено:  {', '.join(f'0x{b:02X}' for b in actual_bytes)}")
-                all_passed = False
-            
-        except Exception as e:
-            print(f"✗ Ошибка при выполнении теста: {e}")
-            all_passed = False
-        
-        print()
-    
-    if all_passed:
-        print("✓ Все тесты из спецификации пройдены успешно!")
-    else:
-        print("✗ Некоторые тесты не пройдены")
-    
-    return all_passed
-
-
 def main():
     """Точка входа CLI-приложения для этапа 2"""
     parser = argparse.ArgumentParser(
@@ -324,23 +221,9 @@ def main():
     parser.add_argument('output_file', help='Путь к двоичному файлу-результату')
     parser.add_argument('--test', action='store_true', 
                        help='Режим тестирования (вывод машинного кода в байтовом формате)')
-    parser.add_argument('--create-test', action='store_true',
-                       help='Создать тестовую программу со всеми командами спецификации')
-    parser.add_argument('--verify-spec', action='store_true',
-                       help='Проверить соответствие тестам из спецификации')
     
     args = parser.parse_args()
-    
-    # Создание тестовой программы
-    if args.create_test:
-        create_test_program()
-        return
-    
-    # Проверка спецификации
-    if args.verify_spec:
-        verify_specification_tests()
-        return
-    
+
     try:
         # Чтение исходного файла
         if not os.path.exists(args.input_file):
