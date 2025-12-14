@@ -1,7 +1,7 @@
 # Конфигурационное управление работа №3 
 
-# Этап 2 Формирование машинного кода
-Реализация ассемблера и интерпретатора для учебной виртуальной машины. Преобразование промежуточное представления в бинарный машинный код УВМ.
+# Этап 3 Интерпретатор и операции с памятью
+Реализация ассемблера и интерпретатора для учебной виртуальной машины. Преобразование промежуточное представления в бинарный машинный код УВМ. Цикл интерпретации, модель памяти УВМ и базовые команды.
 
 ## Язык ассемблера УВМ
 
@@ -24,15 +24,11 @@
 ## Использование
 
 ### Запуск тестов:
-python assembler.py complex_program.asm program.bin --test
+python assembler.py test_simple.asm program.bin 
+python interpreter_cli.py program.bin memory_dump.json --start 0 --end 450
 
 ### Пример работы
-<img width="464" height="793" alt="image" src="https://github.com/user-attachments/assets/4c98d752-abd7-40aa-84eb-f96f5c009aec" />
+<img width="1125" height="285" alt="image" src="https://github.com/user-attachments/assets/d883a901-0fa7-439a-8cfd-d8da828d9182" />
 
-
-<img width="482" height="693" alt="image" src="https://github.com/user-attachments/assets/110592cf-00b1-46cb-8080-56acfd0bcf0b" />
-
-
-<img width="691" height="268" alt="image" src="https://github.com/user-attachments/assets/468effdf-5314-4c1d-ab93-0731024432ca" />
 
 
